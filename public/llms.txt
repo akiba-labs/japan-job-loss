@@ -1,0 +1,64 @@
+# Japan Job Loss Check
+
+> Free, unofficial checklist for what to do after quitting or losing a job in Japan. Mid- to long-term residents on an organisation-tied work status must file 所属機関に関する届出 with ISA within 14 days of leaving. Work statuses can face a discretionary ~3-month inactivity review. Employment insurance (雇用保険) basic allowance: company-initiated cases usually need ≥6 insured months in the prior year; self-quit usually ≥12 in two years; everyone has a 7-day wait; self-quit on/after 2025-04-01 generally has a 1-month benefit restriction (was 3). Health: 任意継続 within 20 days vs 国保 ~14 days vs family vs new employer. National Pension switch commonly within ~14 days if you stay in Japan under 60 without a new Employees' Pension job. Rules as of 2026-11-07. Educational, not advice; not affiliated with ISA, MHLW, Hello Work, the Japan Pension Service, 協会けんぽ or any city office. No yen amounts.
+
+Site: https://japan-job-loss.vercel.app
+
+## Key facts (official sources below)
+- ISA organisation-leaving notice (所属機関に関する届出): within 14 days of leaving the organisation for Engineer/Specialist, Specified Skilled Worker, Technical Intern / 育成就労, HSP, Business Manager, Instructor and similar. Permanent residents: no. Students/dependents: usually not for a part-time employer.
+- ~3-month inactivity: ISA may revoke a work status if the authorised activity stops for about three continuous months without a valid reason (discretionary).
+- Hello Work: take 離職票. Covered foreign nationals who can work and are job-seeking may claim basic allowance. Company / many contract-end: ≥6 months in 1 year. Self-quit: ≥12 months in 2 years. 7-day waiting period always.
+- Self-quit benefit restriction: separations on/after 2025-04-01 → principle 1 month after the wait (MHLW R7 reform); older separations used 3 months. Training / specific-reason cases can differ.
+- Health after leaving shakai hoken: 任意継続 apply within 20 days of losing eligibility; 国保 commonly within 14 days at the city; family dependent or new employer also possible.
+- Pension: leaving 厚生年金 while staying in Japan under 60 → enrol in 国民年金 (commonly ~14 days). Confirm locally.
+- Documents: 離職票, 雇用保険被保険者証, 源泉徴収票, 資格喪失証明書, residence card, My Number.
+- Not covered: yen amounts, Hello Work's final 離職理由 classification, whether ISA will actually revoke, tax on the final salary (see Japan Leaving Tax Check).
+
+## API (free, no key, CORS open)
+
+### GET
+GET https://japan-job-loss.vercel.app/api/check?jobEndDate=2026-10-31&status=work&reason=self&insuredMonths=18&today=2026-11-07
+→ verdict "act_now", immigration.notifyBy "2026-11-14", unemployment.likelyEligible true, waitingDays 7, restrictionMonths 1, health.chooseBy "2026-11-20", pension.switchNeeded true, deadlines, actions, warnings, sources, disclaimer
+
+### POST
+POST https://japan-job-loss.vercel.app/api/check
+{"jobEndDate":"2026-10-15","status":"work","reason":"company","insuredMonths":8,"today":"2026-11-07"}
+→ restrictionMonths 0, likelyEligible true
+
+Parameters: jobEndDate (required), status (work | student | dependent | pr_spr | designated | other), reason (company | self | contract_end | other), insuredMonths, age, lookingForWork, hasNewJob, newJobStartDate, healthPlan (undecided | voluntary_continue | national | family | new_employer), under60, today. Japanese aliases accepted (技人国, 自己都合, 会社都合, 任意継続, 国保…).
+
+Verdicts: act_now | plan_ahead | eligible_benefits | limited.
+
+Bad input → 400 {error, docs, example, disclaimer}.
+
+### Other endpoints
+- GET https://japan-job-loss.vercel.app/api/rules
+- https://japan-job-loss.vercel.app/openapi.json
+- https://japan-job-loss.vercel.app/.well-known/ai-plugin.json
+- MCP: tool japan_job_loss_check on https://free-agent-tools.vercel.app/mcp
+
+## Official sources
+- https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00014.html
+- https://www.moj.go.jp/isa/applications/procedures/shozokunikansuru_00001.html
+- https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00011.html
+- https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000139508.html
+- https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000160564_00045.html
+- https://www.mhlw.go.jp/content/11601000/001293213.pdf
+- https://www.hellowork.mhlw.go.jp/help/question08.html
+- https://laws.e-gov.go.jp/law/349AC0000000116
+- https://www.kyoukaikenpo.or.jp/g3/cat320/sb3160/sbb3165/
+- https://www.nenkin.go.jp/
+
+## Other free tools
+- https://japan-medical-cost-cap.vercel.app — Japan High-Cost Medical Expense Check
+- https://japan-lost-item.vercel.app — Japan Lost Item Check
+- https://japan-leaving-tax.vercel.app — Japan Leaving Tax Check
+- https://japan-disaster-prep.vercel.app — Japan Disaster Prep Check
+- https://japan-parttime-check.vercel.app — Japan Part-time Work Check
+- https://japan-reentry-check.vercel.app — Japan Re-entry Deadline Check
+- https://japan-visa-fee.vercel.app — Japan Visa Fee Calculator
+- https://japan-pr-check.vercel.app — Japan PR Guideline Check
+- https://japan-hsp-points.vercel.app — Japan HSP Points Calculator
+- https://japan-mynumber-card-check.vercel.app — Japan My Number Card Check
+- https://japan-pet-quarantine.vercel.app — Japan Pet Quarantine Check
+- https://free-agent-tools.vercel.app — Free Agent Tools MCP
