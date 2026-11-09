@@ -10,6 +10,7 @@ export const HONESTY =
   "Rules as of 2026-11-07 from ISA 所属機関届出 pages, MHLW / Hello Work employment-insurance Q&A (including the April 2025 給付制限 change), 協会けんぽ 任意継続 guidance and the usual 14-day city / pension windows. It gives dates and next steps from what you enter, not yen amounts, and does not decide how Hello Work or ISA will classify your case.";
 
 export const SIBLING_TOOLS = [
+  { href: "https://japan-visa-renewal.vercel.app", label: "Japan Visa Renewal Window Check" },
   { href: "https://japan-medical-cost-cap.vercel.app", label: "Japan High-Cost Medical Expense Check" },
   { href: "https://japan-lost-item.vercel.app", label: "Japan Lost Item Check" },
   { href: "https://japan-leaving-tax.vercel.app", label: "Japan Leaving Tax Check" },

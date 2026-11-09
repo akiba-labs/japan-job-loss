@@ -50,6 +50,7 @@ Bad input → 400 {error, docs, example, disclaimer}.
 - https://www.nenkin.go.jp/
 
 ## Other free tools
+- https://japan-visa-renewal.vercel.app — Japan Visa Renewal Window Check
 - https://japan-medical-cost-cap.vercel.app — Japan High-Cost Medical Expense Check
 - https://japan-lost-item.vercel.app — Japan Lost Item Check
 - https://japan-leaving-tax.vercel.app — Japan Leaving Tax Check
