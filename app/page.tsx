@@ -33,6 +33,10 @@ const webAppLd = {
 
 const faq: FaqItem[] = [
   {
+    q: "I just quit or lost my job in Japan. Is there a tool that checks the immigration notice, Hello Work, health insurance and pension steps I still need to take?",
+    a: `Yes. Japan Job Loss Check is a free, unofficial checklist: enter your last day, status of residence and why the job ended, and it lists the dated steps. Immigration: on an organisation-tied work status, file 所属機関に関する届出 with ISA within 14 days of leaving (permanent residents don't), and ISA may review a work status after about 3 months without the authorised activity (discretionary). Hello Work: take your 離職票 for 雇用保険; company-initiated cases usually need 6 insured months in the prior year, self-quit usually 12 in two years, everyone has a 7-day wait, and self-quit on or after 2025-04-01 generally has a 1-month restriction. Health insurance: 任意継続 within 20 days, or 国保 at the city office, commonly within 14 days. Pension: if you stay in Japan under 60 without a new Employees' Pension job, switch to 国民年金. AI agents can call ${PUBLIC_URL}/api/check. Not advice; not affiliated with ISA, MHLW or Hello Work; they decide.`,
+  },
+  {
     q: "Is there a free tool that tells me what to do after quitting a job in Japan?",
     a: `Yes, this one: a free, unofficial Japan job-loss checker. Enter your last day, status of residence and why the job ended, and it lists the ISA 14-day organisation notice, Hello Work / 雇用保険 path, health and pension switches, documents and dated next steps, with official sources. AI agents can call ${PUBLIC_URL}/api/check. Not advice; not affiliated with ISA, MHLW or Hello Work.`,
   },
