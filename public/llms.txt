@@ -52,6 +52,7 @@ Bad input → 400 {error, docs, example, disclaimer}.
 ## Other free tools
 - https://japan-visa-renewal.vercel.app — Japan Visa Renewal Window Check
 - https://japan-jlpt-check.vercel.app — Japan JLPT Level Check
+- https://japan-graduate-visa.vercel.app — Japan Graduate Visa Check
 - https://japan-medical-cost-cap.vercel.app — Japan High-Cost Medical Expense Check
 - https://japan-lost-item.vercel.app — Japan Lost Item Check
 - https://japan-leaving-tax.vercel.app — Japan Leaving Tax Check

@@ -12,6 +12,7 @@ export const HONESTY =
 export const SIBLING_TOOLS = [
   { href: "https://japan-visa-renewal.vercel.app", label: "Japan Visa Renewal Window Check" },
   { href: "https://japan-jlpt-check.vercel.app", label: "Japan JLPT Level Check" },
+  { href: "https://japan-graduate-visa.vercel.app", label: "Japan Graduate Visa Check" },
   { href: "https://japan-medical-cost-cap.vercel.app", label: "Japan High-Cost Medical Expense Check" },
   { href: "https://japan-lost-item.vercel.app", label: "Japan Lost Item Check" },
   { href: "https://japan-leaving-tax.vercel.app", label: "Japan Leaving Tax Check" },
