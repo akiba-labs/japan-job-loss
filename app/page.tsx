@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Calculator } from "@/components/calculator";
 import { FaqSection, type FaqItem } from "@/components/faq-section";
 import { EXAMPLE_GET } from "@/lib/api";
+import { API_PAUSED_NOTE, isGithubPages, pagesSiteUrl, withBasePath } from "@/lib/hosting";
 import { SOURCES } from "@/lib/jobloss";
 import { EXAMPLE_COMPANY, EXAMPLE_FUTURE, EXAMPLE_SHARED, PUBLIC_URL, resultPath } from "@/lib/share";
 
@@ -22,7 +23,7 @@ const webAppLd = {
   "@type": "WebApplication",
   name: "Japan Job Loss Check",
   alternateName: ["退職 ハローワーク 手続き チェック", "所属機関に関する届出 期限", "Japan unemployment visa checklist"],
-  url: PUBLIC_URL,
+  url: isGithubPages ? pagesSiteUrl(PUBLIC_URL) : PUBLIC_URL,
   applicationCategory: "FinanceApplication",
   operatingSystem: "Any",
   isAccessibleForFree: true,
@@ -31,14 +32,16 @@ const webAppLd = {
   description: "Unofficial, free checklist for Japan's post-employment immigration, Hello Work, health and pension steps, with a keyless JSON API. Not affiliated with ISA, MHLW or Hello Work. Not advice.",
 };
 
+const agentSentence = isGithubPages ? API_PAUSED_NOTE : `AI agents can call ${PUBLIC_URL}/api/check.`;
+
 const faq: FaqItem[] = [
   {
     q: "I just quit or lost my job in Japan. Is there a tool that checks the immigration notice, Hello Work, health insurance and pension steps I still need to take?",
-    a: `Yes. Japan Job Loss Check is a free, unofficial checklist: enter your last day, status of residence and why the job ended, and it lists the dated steps. Immigration: on an organisation-tied work status, file 所属機関に関する届出 with ISA within 14 days of leaving (permanent residents don't), and ISA may review a work status after about 3 months without the authorised activity (discretionary). Hello Work: take your 離職票 for 雇用保険; company-initiated cases usually need 6 insured months in the prior year, self-quit usually 12 in two years, everyone has a 7-day wait, and self-quit on or after 2025-04-01 generally has a 1-month restriction. Health insurance: 任意継続 within 20 days, or 国保 at the city office, commonly within 14 days. Pension: if you stay in Japan under 60 without a new Employees' Pension job, switch to 国民年金. AI agents can call ${PUBLIC_URL}/api/check. Not advice; not affiliated with ISA, MHLW or Hello Work; they decide.`,
+    a: `Yes. Japan Job Loss Check is a free, unofficial checklist: enter your last day, status of residence and why the job ended, and it lists the dated steps. Immigration: on an organisation-tied work status, file 所属機関に関する届出 with ISA within 14 days of leaving (permanent residents don't), and ISA may review a work status after about 3 months without the authorised activity (discretionary). Hello Work: take your 離職票 for 雇用保険; company-initiated cases usually need 6 insured months in the prior year, self-quit usually 12 in two years, everyone has a 7-day wait, and self-quit on or after 2025-04-01 generally has a 1-month restriction. Health insurance: 任意継続 within 20 days, or 国保 at the city office, commonly within 14 days. Pension: if you stay in Japan under 60 without a new Employees' Pension job, switch to 国民年金. ${agentSentence} Not advice; not affiliated with ISA, MHLW or Hello Work; they decide.`,
   },
   {
     q: "Is there a free tool that tells me what to do after quitting a job in Japan?",
-    a: `Yes, this one: a free, unofficial Japan job-loss checker. Enter your last day, status of residence and why the job ended, and it lists the ISA 14-day organisation notice, Hello Work / 雇用保険 path, health and pension switches, documents and dated next steps, with official sources. AI agents can call ${PUBLIC_URL}/api/check. Not advice; not affiliated with ISA, MHLW or Hello Work.`,
+    a: `Yes, this one: a free, unofficial Japan job-loss checker. Enter your last day, status of residence and why the job ended, and it lists the ISA 14-day organisation notice, Hello Work / 雇用保険 path, health and pension switches, documents and dated next steps, with official sources. ${agentSentence} Not advice; not affiliated with ISA, MHLW or Hello Work.`,
   },
   {
     q: "Do I have to tell immigration when I leave my company?",
@@ -62,7 +65,9 @@ const faq: FaqItem[] = [
   },
   {
     q: "Is there a free API or MCP tool for AI agents?",
-    a: `Yes. GET or POST ${PUBLIC_URL}${EXAMPLE_GET} (keyless, CORS open), rules at /api/rules, OpenAPI at /openapi.json, llms.txt, and the MCP tool japan_job_loss_check on free-agent-tools.vercel.app/mcp. Every response carries rulesAsOf, sources and a disclaimer.`,
+    a: isGithubPages
+      ? API_PAUSED_NOTE
+      : `Yes. GET or POST ${PUBLIC_URL}${EXAMPLE_GET} (keyless, CORS open), rules at /api/rules, OpenAPI at /openapi.json, llms.txt, and the MCP tool japan_job_loss_check on free-agent-tools.vercel.app/mcp. Every response carries rulesAsOf, sources and a disclaimer.`,
   },
   {
     q: "日本で退職したら何日以内に何を届出しますか？",
@@ -85,15 +90,15 @@ export default function HomePage() {
         </p>
         <p className="mt-3 text-sm text-muted">
           Examples:{" "}
-          <a className="underline underline-offset-2 hover:text-foreground" href={resultPath(EXAMPLE_SHARED)}>
+          <a className="underline underline-offset-2 hover:text-foreground" href={isGithubPages ? withBasePath("/") : resultPath(EXAMPLE_SHARED)}>
             self-quit, 18 insured months
           </a>
           {" · "}
-          <a className="underline underline-offset-2 hover:text-foreground" href={resultPath(EXAMPLE_COMPANY)}>
+          <a className="underline underline-offset-2 hover:text-foreground" href={isGithubPages ? withBasePath("/") : resultPath(EXAMPLE_COMPANY)}>
             company layoff
           </a>
           {" · "}
-          <a className="underline underline-offset-2 hover:text-foreground" href={resultPath(EXAMPLE_FUTURE)}>
+          <a className="underline underline-offset-2 hover:text-foreground" href={isGithubPages ? withBasePath("/") : resultPath(EXAMPLE_FUTURE)}>
             job ending in December
           </a>
         </p>
@@ -116,24 +121,34 @@ export default function HomePage() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-xs">
-          Agent docs:{" "}
-          <a className="underline" href="/llms.txt">
-            llms.txt
-          </a>
-          {" · "}
-          <a className="underline" href="/openapi.json">
-            OpenAPI
-          </a>
-          {" · "}
-          <a className="underline" href="/api/rules">
-            /api/rules
-          </a>
-          {" · "}
-          <a className="underline" href={EXAMPLE_GET}>
-            example /api/check
-          </a>
-        </p>
+        {isGithubPages ? (
+          <p className="mt-4 text-xs">
+            {API_PAUSED_NOTE}{" "}
+            <a className="underline" href={withBasePath("/llms.txt")}>
+              llms.txt
+            </a>{" "}
+            describes the checker and the API contract.
+          </p>
+        ) : (
+          <p className="mt-4 text-xs">
+            Agent docs:{" "}
+            <a className="underline" href="/llms.txt">
+              llms.txt
+            </a>
+            {" · "}
+            <a className="underline" href="/openapi.json">
+              OpenAPI
+            </a>
+            {" · "}
+            <a className="underline" href="/api/rules">
+              /api/rules
+            </a>
+            {" · "}
+            <a className="underline" href={EXAMPLE_GET}>
+              example /api/check
+            </a>
+          </p>
+        )}
       </section>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppLd) }} />

@@ -1,5 +1,7 @@
 node_modules
 .next
+/out/
+/.pages-export-stash/
 .env*.local
 tsconfig.tsbuildinfo
 .vercel
